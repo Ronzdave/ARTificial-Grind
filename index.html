@@ -1,0 +1,1878 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="StyleSync - AR-Powered Barbershop Queue & Booking App for Filipino Men in the Davao Region. Coming Soon.">
+  <meta name="keywords" content="barbershop, AR, augmented reality, queue, booking, Filipino men, Davao, StyleSync, ARTificial Grind">
+  <meta name="author" content="ARTificial Grind">
+  <meta property="og:title" content="StyleSync — Skip the Wait, Book Your Barber">
+  <meta property="og:description" content="The first AR-powered barbershop queue and booking app for Filipino men. Coming Soon.">
+  <meta property="og:image" content="https://placehold.co/1200x630/0A1214/00F5D4?text=StyleSync">
+  <title>StyleSync — AR-Powered Barbershop App | Davao Region | ARTificial Grind</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      /* Backgrounds & Surfaces */
+      --navy: #0A1214;           /* Deep Navy (Main Background) */
+      --navy-light: #1A2B2F;     /* Surface/Card/Component Background */
+      --navy-deep: #0A0A1A;
+      
+      /* Accents & Actions */
+      --accent-primary: #D946A6;   /* Magenta (Primary Action & Brand) */
+      --accent-secondary: #B93D8C; /* Darker Magenta (Hover/Pressed states) */
+      --accent-glow: rgba(217, 70, 166, 0.3); /* Magenta Bloom Effect */
+      
+      /* Status Colors */
+      --teal: #00F5D4;
+      --gold: #FFD700;
+      --gold-dark: #DAA520;
+      --gold-glow: rgba(255, 215, 0, 0.3);
+      --gold-border: rgba(255, 215, 0, 0.2);
+      
+      /* Typography */
+      --text-primary: #E8FEF8;     /* Light Cyan */
+      --text-secondary: #8CB7B8;   /* Teal-Gray (Body & Meta text) */
+      
+      /* Borders & Glass */
+      --glass-border: rgba(217, 70, 166, 0.15);
+      
+      --white: #FFFFFF;
+      --gray-100: #F4F4F8;
+      --gray-400: #8CB7B8;
+      --font-heading: 'Orbitron', sans-serif;
+      --font-body: 'Inter', sans-serif;
+      --max-width: 1200px;
+      --radius-card: 16px;
+      --radius-pill: 12px;
+    }
+
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font-body);
+      background: var(--navy);
+      color: var(--text-primary);
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    a { text-decoration: none; color: inherit; }
+    img { max-width: 100%; display: block; }
+    button, a { font-family: inherit; }
+    button { border: none; cursor: pointer; background: none; color: inherit; }
+
+    .container {
+      width: min(100%, var(--max-width));
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    section[id] { scroll-margin-top: 80px; }
+
+    /* ── Scroll Reveal ── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.65s ease, transform 0.65s ease;
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    /* ── Section Header ── */
+    .sec-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(217, 70, 166, 0.12);
+      border: 1px solid rgba(217, 70, 166, 0.25);
+      color: var(--accent-primary);
+      border-radius: 100px;
+      padding: 6px 18px;
+      font-size: 0.82rem;
+      font-weight: 500;
+      margin-bottom: 20px;
+      box-shadow: 0 0 12px rgba(255, 215, 0, 0.15), inset 0 0 8px rgba(255, 215, 0, 0.06);
+    }
+
+    .sec-title {
+      font-family: var(--font-heading);
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      font-weight: 700;
+      line-height: 1.15;
+      margin-bottom: 16px;
+    }
+
+    .sec-sub {
+      color: var(--gray-400);
+      font-size: 1rem;
+      line-height: 1.75;
+      max-width: 620px;
+    }
+
+    .sec-sub.centered { margin: 0 auto; text-align: center; }
+
+    .sec-header { margin-bottom: 48px; }
+    .sec-header.centered { text-align: center; display: flex; flex-direction: column; align-items: center; }
+
+    /* ── Buttons ── */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 14px 32px;
+      border-radius: var(--radius-pill);
+      font-size: 0.95rem;
+      font-weight: 500;
+      transition: all 0.25s ease;
+      cursor: pointer;
+      white-space: nowrap;
+      min-height: 48px;
+      min-width: 44px;
+      border: none;
+    }
+
+    .btn:focus-visible {
+      outline: 2px solid var(--accent-primary);
+      outline-offset: 3px;
+    }
+
+    .btn-accent {
+      background: linear-gradient(135deg, #D946A6, #B93D8C);
+      color: var(--white);
+      box-shadow: 0 0 20px rgba(217, 70, 166, 0.4), 0 4px 15px rgba(217, 70, 166, 0.25), inset 0 0 15px rgba(255, 215, 0, 0.15);
+      font-weight: 600;
+      border: 1px solid rgba(255, 215, 0, 0.3);
+    }
+    .btn-accent:hover {
+      background: linear-gradient(135deg, #B93D8C, #A02E75);
+      transform: scale(1.05);
+      box-shadow: 0 0 30px rgba(217, 70, 166, 0.6), 0 8px 25px rgba(217, 70, 166, 0.35), inset 0 0 20px rgba(255, 215, 0, 0.2);
+      border-color: rgba(255, 215, 0, 0.5);
+    }
+
+    .btn-outline {
+      background: transparent;
+      border: 2px solid rgba(217, 70, 166, 0.4);
+      color: var(--white);
+    }
+    .btn-outline:hover { background: rgba(217, 70, 166, 0.08); }
+
+    .btn-teal {
+      background: transparent;
+      border: 2px solid #00F5D4;
+      color: #00F5D4;
+    }
+    .btn-teal:hover { background: #00F5D4; color: var(--navy); }
+
+    /* ── Cards ── */
+    .card {
+      background: rgba(26, 43, 47, 0.6);
+      backdrop-filter: blur(15px);
+      -webkit-backdrop-filter: blur(15px);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--radius-card);
+      transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+      box-shadow: inset 0 0 20px rgba(255, 215, 0, 0.05);
+    }
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 24px 60px rgba(217, 70, 166, 0.15);
+      border-color: var(--accent-primary);
+    }
+
+    /* ── NAVBAR ── */
+    #navbar {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      height: 70px;
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 24px;
+      background: rgba(26, 43, 47, 0.85);
+      backdrop-filter: blur(15px);
+      -webkit-backdrop-filter: blur(15px);
+      transition: background 0.3s ease, border-color 0.3s ease;
+      border-bottom: 1px solid rgba(255, 215, 0, 0.1);
+      box-shadow: inset 0 -1px 10px rgba(255, 215, 0, 0.05);
+    }
+    #navbar.scrolled {
+      background: rgba(26, 43, 47, 0.95);
+      border-bottom-color: rgba(255, 215, 0, 0.2);
+      box-shadow: 0 4px 20px rgba(255, 215, 0, 0.1);
+    }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: 1.35rem;
+      color: var(--white);
+      text-decoration: none;
+    }
+    .nav-logo i { color: var(--accent-primary); font-size: 1.1rem; filter: drop-shadow(0 0 8px rgba(217, 70, 166, 0.6)); }
+    .nav-logo .highlight { color: var(--accent-primary); }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+    }
+    .nav-links a {
+      font-size: 0.88rem;
+      font-weight: 500;
+      color: var(--gray-400);
+      position: relative;
+      transition: color 0.2s;
+    }
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -4px; left: 0;
+      width: 0; height: 2px;
+      background: linear-gradient(90deg, #D946A6, #00F5D4);
+      transition: width 0.25s ease;
+    }
+    .nav-links a:hover, .nav-links a.active { color: var(--white); }
+    .nav-links a:hover::after, .nav-links a.active::after { width: 100%; }
+
+    .nav-right { display: flex; align-items: center; gap: 12px; }
+
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      padding: 6px;
+    }
+    .hamburger span {
+      display: block;
+      width: 24px; height: 2px;
+      background: var(--white);
+      border-radius: 2px;
+      transition: all 0.3s ease;
+    }
+    .hamburger.open span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
+
+    .mobile-menu {
+      display: none;
+      position: absolute;
+      top: 70px; left: 0; right: 0;
+      background: rgba(26, 43, 47, 0.9);
+      backdrop-filter: blur(15px);
+      -webkit-backdrop-filter: blur(15px);
+      border-bottom: 1px solid rgba(217, 70, 166, 0.1);
+      padding: 16px 24px 24px;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a {
+      padding: 12px 16px;
+      color: var(--gray-400);
+      font-size: 0.95rem;
+      border-radius: 10px;
+      transition: background 0.2s, color 0.2s;
+    }
+    .mobile-menu a:hover { background: rgba(255,255,255,0.06); color: var(--white); }
+    .mobile-menu .btn { width: 100%; margin-top: 8px; justify-content: center; }
+
+    /* ── HERO ── */
+    #hero {
+      min-height: 100vh;
+      padding: 110px 0 80px;
+      background: var(--navy);
+      background-image: repeating-linear-gradient(
+        45deg,
+        rgba(255,255,255,0.025) 0 1px,
+        transparent 1px 48px
+      );
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-inner {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 56px;
+      align-items: center;
+    }
+
+    .hero-venture {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(0, 245, 212, 0.1);
+      border: 1px solid rgba(0, 245, 212, 0.3);
+      color: #00F5D4;
+      border-radius: 100px;
+      padding: 5px 16px;
+      font-size: 0.78rem;
+      font-weight: 500;
+      margin-bottom: 14px;
+      letter-spacing: 0.03em;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(217, 70, 166, 0.12);
+      border: 1px solid rgba(217, 70, 166, 0.28);
+      color: var(--accent-primary);
+      border-radius: 100px;
+      padding: 6px 18px;
+      font-size: 0.82rem;
+      font-weight: 500;
+      margin-bottom: 24px;
+      box-shadow: 0 0 15px rgba(255, 215, 0, 0.2), inset 0 0 10px rgba(255, 215, 0, 0.08);
+    }
+
+    h1.hero-title {
+      font-family: var(--font-heading);
+      font-size: clamp(2.6rem, 6vw, 4.8rem);
+      font-weight: 800;
+      line-height: 1.0;
+      margin-bottom: 24px;
+    }
+    h1.hero-title .line { display: block; }
+    h1.hero-title .line-accent {
+      color: var(--accent-primary);
+      position: relative;
+      display: inline-block;
+    }
+    h1.hero-title .line-accent::after {
+      content: '';
+      position: absolute;
+      bottom: -6px; left: 0;
+      width: 55%; height: 4px;
+      background: linear-gradient(90deg, #D946A6, #FFD700, #00F5D4);
+      border-radius: 2px;
+      box-shadow: 0 0 15px rgba(255, 215, 0, 0.3);
+    }
+
+    .hero-copy {
+      color: var(--gray-400);
+      font-size: 1.05rem;
+      line-height: 1.75;
+      max-width: 480px;
+      margin-bottom: 36px;
+    }
+
+    .hero-coming-soon {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255, 215, 0, 0.1);
+      border: 1px solid rgba(255, 215, 0, 0.25);
+      color: #FFD700;
+      border-radius: 8px;
+      padding: 8px 16px;
+      font-size: 0.82rem;
+      font-weight: 500;
+      margin-bottom: 28px;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-bottom: 40px;
+    }
+
+    .hero-stats {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 32px;
+      padding-top: 32px;
+      border-top: 1px solid rgba(255,255,255,0.07);
+    }
+
+    .stat-num {
+      font-family: var(--font-heading);
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: var(--white);
+      display: block;
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+    .stat-lbl {
+      font-size: 0.78rem;
+      color: var(--gray-400);
+      line-height: 1.4;
+    }
+
+    /* Phone mockup */
+    .phone-wrap {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      padding: 20px 30px;
+    }
+
+    .phone-frame {
+      position: relative;
+      width: 260px;
+      height: 520px;
+      border-radius: 32px;
+      border: 2px solid rgba(217, 70, 166, 0.25);
+      background: var(--navy-light);
+      box-shadow:
+        0 0 0 8px rgba(217, 70, 166, 0.08),
+        0 40px 100px rgba(0,0,0,0.5),
+        inset 0 0 60px rgba(217, 70, 166, 0.04);
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+
+    .phone-frame img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .float-card {
+      position: absolute;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 14px;
+      border-radius: 12px;
+      box-shadow: 0 8px 28px rgba(0,0,0,0.35);
+    }
+
+    .float-card.top-right {
+      top: 30px;
+      right: -10px;
+      background: var(--navy-light);
+      border: 1px solid rgba(217, 70, 166, 0.2);
+      animation: floatUD 3s ease-in-out infinite;
+    }
+
+    .float-card.bottom-left {
+      bottom: 50px;
+      left: -10px;
+      background: #00F5D4;
+      color: var(--navy);
+      animation: floatUD 3s ease-in-out infinite;
+      animation-delay: 1.5s;
+    }
+
+    .float-card i { font-size: 1rem; color: var(--navy); flex-shrink: 0; }
+    .float-card .fc-text p { font-size: 0.73rem; font-weight: 500; color: var(--navy); line-height: 1.3; }
+    .float-card .fc-text span { font-size: 0.65rem; color: rgba(10, 18, 20, 0.7); }
+
+    @keyframes floatUD {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-9px); }
+    }
+
+    .scroll-cue {
+      position: absolute;
+      bottom: 28px;
+      left: 50%;
+      transform: translateX(-50%);
+      color: rgba(255,255,255,0.4);
+      font-size: 1.4rem;
+      animation: bounceY 2s ease-in-out infinite;
+      cursor: pointer;
+    }
+
+    @keyframes bounceY {
+      0%, 100% { transform: translateX(-50%) translateY(0); }
+      50% { transform: translateX(-50%) translateY(9px); }
+    }
+
+    /* ── PROBLEM ── */
+    #problem {
+      padding: 96px 0;
+      background: linear-gradient(180deg, var(--navy) 0%, #0F1929 100%);
+    }
+
+    .problem-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 24px;
+    }
+
+    .prob-card {
+      padding: 32px 28px;
+      border-radius: var(--radius-card);
+      background: rgba(26, 43, 47, 0.6);
+      backdrop-filter: blur(15px);
+      -webkit-backdrop-filter: blur(15px);
+      border: 1px solid rgba(217, 70, 166, 0.15);
+      border-left: 4px solid var(--accent-primary);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      box-shadow: inset 0 0 15px rgba(255, 215, 0, 0.03);
+    }
+    .prob-card:hover { transform: translateY(-5px); box-shadow: 0 20px 50px rgba(217, 70, 166, 0.2), inset 0 0 15px rgba(255, 215, 0, 0.05); }
+    .prob-card.gold  { border-left-color: #FFD700; border-color: rgba(255, 215, 0, 0.2); box-shadow: inset 0 0 15px rgba(255, 215, 0, 0.08); }
+    .prob-card.gold:hover { box-shadow: 0 20px 50px rgba(255, 215, 0, 0.2), inset 0 0 20px rgba(255, 215, 0, 0.1); }
+    .prob-card.teal  { border-left-color: #00F5D4; }
+    .prob-card.red2  { border-left-color: var(--accent-primary); }
+
+    .prob-icon {
+      width: 48px; height: 48px;
+      border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.25rem;
+      margin-bottom: 20px;
+      background: rgba(255,255,255,0.05);
+      transition: all 0.3s ease;
+    }
+    .prob-card .prob-icon { color: var(--accent-primary); box-shadow: 0 0 12px rgba(217, 70, 166, 0.3); }
+    .prob-card.gold .prob-icon { color: #FFD700; box-shadow: 0 0 15px rgba(255, 215, 0, 0.5), inset 0 0 10px rgba(255, 215, 0, 0.15); background: rgba(255, 215, 0, 0.1); }
+    .prob-card.teal .prob-icon { color: #00F5D4; box-shadow: 0 0 12px rgba(0, 245, 212, 0.3); }
+
+    .prob-stat {
+      font-family: var(--font-heading);
+      font-size: 2.1rem;
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 6px;
+    }
+    .prob-label {
+      font-size: 0.95rem;
+      font-weight: 500;
+      color: var(--white);
+      margin-bottom: 10px;
+    }
+    .prob-body {
+      font-size: 0.88rem;
+      color: var(--gray-400);
+      line-height: 1.65;
+    }
+
+    /* ── FEATURES ── */
+    #features {
+      padding: 96px 0;
+      background: var(--navy);
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 24px;
+    }
+
+    .feat-card {
+      padding: 32px 28px;
+    }
+
+    .feat-icon-wrap {
+      width: 52px; height: 52px;
+      border-radius: 14px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.3rem;
+      margin-bottom: 22px;
+    }
+    .feat-card.c-red  .feat-icon-wrap { background: rgba(217, 70, 166, 0.12);  color: var(--accent-primary); }
+    .feat-card.c-teal .feat-icon-wrap { background: rgba(0, 245, 212, 0.12); color: #00F5D4; }
+    .feat-card.c-gold .feat-icon-wrap { background: rgba(255, 215, 0, 0.12); color: #FFD700; }
+
+    .feat-title {
+      font-family: var(--font-heading);
+      font-size: 1.15rem;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+    .feat-body {
+      font-size: 0.9rem;
+      color: var(--gray-400);
+      line-height: 1.65;
+      margin-bottom: 16px;
+    }
+
+    .feat-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+    .tag {
+      font-size: 0.72rem;
+      font-weight: 500;
+      padding: 4px 12px;
+      border-radius: 100px;
+      background: rgba(255,255,255,0.06);
+      color: var(--gray-400);
+    }
+    .tag.red  { background: rgba(217, 70, 166, 0.12);  color: var(--accent-primary); }
+    .tag.teal { background: rgba(0, 245, 212, 0.12); color: #00F5D4; }
+    .tag.gold { background: rgba(255, 215, 0, 0.12); color: #FFD700; }
+
+    /* ── HOW IT WORKS ── */
+    #how-it-works {
+      padding: 96px 0;
+      background: #0F1929;
+    }
+
+    .steps-row {
+      display: flex;
+      align-items: stretch;
+      gap: 0;
+      margin-bottom: 40px;
+    }
+
+    .step {
+      flex: 1;
+      text-align: center;
+      padding: 36px 24px;
+      border-radius: var(--radius-card);
+      background: rgba(26, 43, 47, 0.6);
+      backdrop-filter: blur(15px);
+      -webkit-backdrop-filter: blur(15px);
+      border: 1px solid rgba(217, 70, 166, 0.15);
+      transition: transform 0.3s ease;
+    }
+    .step:hover { transform: translateY(-5px); }
+
+    .step-num {
+      width: 56px; height: 56px;
+      border-radius: 50%;
+      margin: 0 auto 18px;
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: 1.05rem;
+      background: var(--navy);
+    }
+    .step.s-red  .step-num { border: 2px solid var(--accent-primary);  color: var(--accent-primary); }
+    .step.s-teal .step-num { border: 2px solid #00F5D4; color: #00F5D4; }
+    .step.s-gold .step-num { border: 2px solid #FFD700; color: #FFD700; }
+
+    .step-icon { font-size: 2rem; margin-bottom: 14px; }
+    .step.s-red  .step-icon { color: var(--accent-primary); }
+    .step.s-teal .step-icon { color: #00F5D4; }
+    .step.s-gold .step-icon { color: #FFD700; }
+
+    .step-title {
+      font-family: var(--font-heading);
+      font-size: 1.1rem;
+      margin-bottom: 10px;
+    }
+    .step-body { font-size: 0.88rem; color: var(--gray-400); line-height: 1.65; }
+
+    .step-connector {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 12px;
+      color: var(--gray-400);
+      font-size: 1.2rem;
+      align-self: center;
+      flex-shrink: 0;
+    }
+
+    .payment-note {
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+      padding: 24px 28px;
+      background: rgba(0, 245, 212, 0.08);
+      border: 1px solid rgba(0, 245, 212, 0.2);
+      border-radius: var(--radius-card);
+    }
+    .payment-note i { color: #00F5D4; font-size: 1.3rem; margin-top: 2px; flex-shrink: 0; }
+    .payment-note p { font-size: 0.9rem; color: var(--gray-400); line-height: 1.65; }
+    .payment-note p strong { color: var(--white); }
+
+    /* ── PRICING ── */
+    #pricing {
+      padding: 96px 0;
+      background: var(--navy);
+    }
+
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+      align-items: start;
+    }
+
+    .price-card {
+      padding: 36px 28px;
+      border-radius: var(--radius-card);
+      background: rgba(26, 43, 47, 0.6);
+      backdrop-filter: blur(15px);
+      -webkit-backdrop-filter: blur(15px);
+      border: 1px solid rgba(217, 70, 166, 0.15);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      box-shadow: inset 0 0 15px rgba(255, 215, 0, 0.03);
+    }
+    .price-card:hover { transform: translateY(-5px); box-shadow: 0 12px 30px rgba(217, 70, 166, 0.15), inset 0 0 15px rgba(255, 215, 0, 0.05); }
+
+    .price-card.popular {
+      border-color: var(--gold);
+      border-width: 2px;
+      box-shadow: 0 0 0 1px var(--gold), 0 20px 60px rgba(255, 215, 0, 0.35), inset 0 0 20px rgba(255, 215, 0, 0.08);
+      position: relative;
+      background: rgba(26, 43, 47, 0.75);
+    }
+
+    .popular-badge {
+      position: absolute;
+      top: -14px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: linear-gradient(135deg, #FFD700, #DAA520);
+      color: var(--navy);
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 5px 18px;
+      border-radius: 100px;
+      white-space: nowrap;
+      box-shadow: 0 0 20px rgba(255, 215, 0, 0.6), 0 4px 15px rgba(255, 215, 0, 0.4);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+    }
+
+    .price-tier {
+      font-size: 0.75rem;
+      font-weight: 500;
+      padding: 4px 14px;
+      border-radius: 100px;
+      display: inline-block;
+      margin-bottom: 20px;
+    }
+    .price-card .price-tier { background: rgba(255,255,255,0.06); color: var(--gray-400); }
+    .price-card.popular .price-tier { background: rgba(217, 70, 166, 0.14); color: var(--accent-primary); }
+    .price-card.c-teal .price-tier { background: rgba(0, 245, 212, 0.12); color: #00F5D4; }
+
+    .price-name {
+      font-family: var(--font-heading);
+      font-size: 1.6rem;
+      margin-bottom: 8px;
+    }
+
+    .price-amount {
+      font-family: var(--font-heading);
+      font-size: 3rem;
+      font-weight: 800;
+      margin-bottom: 4px;
+      text-shadow: 0 0 15px rgba(255, 215, 0, 0.1);
+    }
+    .price-card .price-amount { color: var(--white); }
+    .price-card.popular .price-amount { color: var(--gold); text-shadow: 0 0 25px rgba(255, 215, 0, 0.4); }
+    .price-card.c-teal .price-amount { color: #00F5D4; text-shadow: 0 0 15px rgba(0, 245, 212, 0.2); }
+
+    .price-period { font-size: 0.88rem; color: var(--gray-400); margin-bottom: 6px; }
+    .price-save { font-size: 0.82rem; color: #00F5D4; margin-bottom: 24px; }
+
+    .price-divider { height: 1px; background: rgba(255,255,255,0.07); margin-bottom: 24px; }
+
+    .price-feats { list-style: none; margin-bottom: 28px; }
+    .price-feats li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: 0.88rem;
+      color: var(--gray-400);
+      margin-bottom: 12px;
+      line-height: 1.4;
+    }
+    .price-feats li i.fa-check { color: #00F5D4; flex-shrink: 0; margin-top: 3px; }
+    .price-feats li i.fa-xmark { color: rgba(255,255,255,0.2); flex-shrink: 0; margin-top: 3px; }
+    .price-feats li.disabled { opacity: 0.45; }
+
+    .price-cta { width: 100%; justify-content: center; }
+
+    .pricing-note {
+      text-align: center;
+      color: var(--gray-400);
+      font-size: 0.85rem;
+      margin-top: 32px;
+      line-height: 1.65;
+    }
+    .pricing-note a { color: #00F5D4; text-decoration: underline; }
+
+    /* ── ABOUT ── */
+    #about {
+      padding: 96px 0;
+      background: #0F1929;
+    }
+
+    .team-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+      margin-bottom: 48px;
+    }
+
+    .team-card {
+      padding: 36px 28px;
+      text-align: center;
+      background: rgba(26, 43, 47, 0.6);
+      backdrop-filter: blur(15px);
+      -webkit-backdrop-filter: blur(15px);
+      border-radius: var(--radius-card);
+      border: 1px solid rgba(217, 70, 166, 0.15);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .team-card:hover { transform: translateY(-5px); box-shadow: 0 20px 50px rgba(217, 70, 166, 0.2); }
+
+    .team-avatar {
+      width: 80px; height: 80px;
+      border-radius: 50%;
+      margin: 0 auto 18px;
+      border: 2px solid rgba(255,255,255,0.1);
+      object-fit: cover;
+    }
+
+    .team-name {
+      font-family: var(--font-heading);
+      font-size: 1.1rem;
+      margin-bottom: 6px;
+    }
+    .team-role { font-size: 0.85rem; font-weight: 500; margin-bottom: 12px; }
+    .team-bio { font-size: 0.88rem; color: var(--gray-400); line-height: 1.65; }
+
+    .mission-box {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 36px 40px;
+      background: rgba(217, 70, 166, 0.08);
+      border: 1px solid rgba(217, 70, 166, 0.2);
+      border-radius: var(--radius-card);
+      text-align: center;
+    }
+    .mission-quote {
+      font-style: italic;
+      font-size: 1.05rem;
+      color: var(--gray-400);
+      line-height: 1.8;
+      margin-bottom: 16px;
+    }
+    .mission-credit {
+      font-size: 0.88rem;
+      font-weight: 500;
+      color: var(--accent-primary);
+    }
+
+    /* ── DOWNLOAD / CTA ── */
+    #download {
+      padding: 96px 0;
+      background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 100%);
+      position: relative;
+      overflow: hidden;
+    }
+    #download::before {
+      content: '';
+      position: absolute;
+      width: 500px; height: 500px;
+      background: radial-gradient(circle, rgba(217, 70, 166, 0.15) 0%, transparent 70%);
+      top: -150px; left: -150px;
+      pointer-events: none;
+    }
+    #download::after {
+      content: '';
+      position: absolute;
+      width: 500px; height: 500px;
+      background: radial-gradient(circle, rgba(0, 245, 212, 0.1) 0%, transparent 70%);
+      bottom: -150px; right: -150px;
+      pointer-events: none;
+    }
+
+    .dl-inner {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      max-width: 680px;
+      margin: 0 auto;
+    }
+
+    .dl-icon {
+      width: 80px; height: 80px;
+      border-radius: 50%;
+      background: rgba(217, 70, 166, 0.14);
+      border: 2px solid rgba(217, 70, 166, 0.28);
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 28px;
+      font-size: 2rem;
+      color: var(--accent-primary);
+    }
+
+    .dl-title {
+      font-family: var(--font-heading);
+      font-size: clamp(2rem, 5vw, 3.2rem);
+      font-weight: 800;
+      margin-bottom: 20px;
+    }
+    .dl-sub {
+      color: var(--gray-400);
+      font-size: 1rem;
+      line-height: 1.75;
+      margin-bottom: 40px;
+    }
+
+    .dl-status {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255, 215, 0, 0.1);
+      border: 1px solid rgba(255, 215, 0, 0.25);
+      color: #FFD700;
+      border-radius: 8px;
+      padding: 8px 18px;
+      font-size: 0.82rem;
+      font-weight: 500;
+      margin-bottom: 36px;
+    }
+    .dl-status i { animation: pulse 1.5s ease-in-out infinite; }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.4; }
+    }
+
+    .dl-store-btns {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 16px;
+      margin-bottom: 28px;
+    }
+
+    .store-btn {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 14px 24px;
+      border-radius: 14px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.14);
+      cursor: pointer;
+      transition: all 0.25s ease;
+      min-width: 190px;
+      text-align: left;
+    }
+    .store-btn:hover {
+      background: rgba(217, 70, 166, 0.1);
+      border-color: rgba(217, 70, 166, 0.25);
+      transform: translateY(-2px);
+    }
+    .store-btn:focus-visible { outline: 2px solid var(--accent-primary); outline-offset: 3px; }
+    .store-btn i { font-size: 1.5rem; color: var(--white); flex-shrink: 0; }
+    .store-btn-text { display: flex; flex-direction: column; gap: 2px; }
+    .store-btn-text .small { font-size: 0.68rem; color: var(--gray-400); }
+    .store-btn-text .large { font-size: 0.95rem; font-weight: 600; color: var(--white); }
+
+    .dl-contact {
+      color: var(--gray-400);
+      font-size: 0.88rem;
+      margin-bottom: 24px;
+    }
+    .dl-contact a { color: #00F5D4; }
+    .dl-contact a:hover { text-decoration: underline; }
+
+    .social-row {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+    }
+    .social-row a {
+      width: 40px; height: 40px;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      background: rgba(255,255,255,0.06);
+      color: var(--gray-400);
+      font-size: 1rem;
+      transition: background 0.25s, color 0.25s;
+    }
+    .social-row a:hover { background: rgba(217, 70, 166, 0.14); color: var(--accent-primary); }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--navy-deep);
+      padding: 56px 0 28px;
+      border-top: 1px solid rgba(255, 215, 0, 0.15);
+      box-shadow: inset 0 2px 15px rgba(255, 215, 0, 0.08);
+    }
+
+    .foot-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 40px;
+      margin-bottom: 40px;
+    }
+
+    .foot-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: 1.2rem;
+      margin-bottom: 14px;
+    }
+    .foot-logo i { color: var(--accent-primary); }
+    .foot-logo .highlight { color: var(--accent-primary); }
+
+    .foot-venture {
+      font-size: 0.75rem;
+      color: #00F5D4;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+
+    .foot-desc {
+      font-size: 0.84rem;
+      color: var(--gray-400);
+      line-height: 1.65;
+      margin-bottom: 14px;
+    }
+    .foot-copy { font-size: 0.78rem; color: rgba(255,255,255,0.25); }
+
+    .foot-heading {
+      font-size: 0.76rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--gray-400);
+      margin-bottom: 16px;
+    }
+
+    .foot-links { display: flex; flex-direction: column; gap: 10px; }
+    .foot-links a, .foot-links span {
+      font-size: 0.88rem;
+      color: var(--gray-400);
+      transition: color 0.2s;
+    }
+    .foot-links a:hover { color: var(--white); }
+
+    .foot-divider { height: 1px; background: rgba(255,255,255,0.06); margin-bottom: 24px; }
+
+    .foot-bottom {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 12px;
+      font-size: 0.74rem;
+      color: rgba(255,255,255,0.22);
+    }
+
+    /* ── MODAL ── */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.82);
+      z-index: 2000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+    .modal-overlay.open { display: flex; }
+
+    .modal-box {
+      background: rgba(26, 43, 47, 0.9);
+      backdrop-filter: blur(15px);
+      -webkit-backdrop-filter: blur(15px);
+      border: 1px solid rgba(217, 70, 166, 0.15);
+      border-radius: 22px;
+      padding: 32px;
+      width: min(100%, 680px);
+      position: relative;
+      animation: modalIn 0.3s ease;
+    }
+    @keyframes modalIn {
+      from { opacity: 0; transform: scale(0.96) translateY(12px); }
+      to   { opacity: 1; transform: scale(1) translateY(0); }
+    }
+
+    .modal-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 24px;
+    }
+    .modal-head h3 {
+      font-family: var(--font-heading);
+      font-size: 1.1rem;
+    }
+    .modal-close {
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      color: var(--gray-400);
+      font-size: 1.1rem;
+      transition: background 0.2s, color 0.2s;
+    }
+    .modal-close:hover { background: rgba(255,255,255,0.08); color: var(--white); }
+    .modal-close:focus-visible { outline: 2px solid var(--accent-primary); }
+
+    .video-box {
+      aspect-ratio: 16/9;
+      background: rgba(10, 18, 20, 0.6);
+      border-radius: 14px;
+      border: 1px solid rgba(217, 70, 166, 0.15);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 32px;
+      margin-bottom: 20px;
+    }
+    .video-box i { font-size: 3.5rem; color: var(--accent-primary); margin-bottom: 14px; filter: drop-shadow(0 0 10px rgba(217, 70, 166, 0.5)); }
+    .video-box h4 { font-family: var(--font-heading); font-size: 1.1rem; margin-bottom: 10px; }
+    .video-box p { font-size: 0.88rem; color: var(--gray-400); line-height: 1.6; max-width: 420px; }
+
+    .modal-thumbs {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+    .modal-thumb { border-radius: 10px; overflow: hidden; }
+    .modal-thumb img { width: 100%; display: block; }
+    .modal-caption { text-align: center; font-size: 0.78rem; color: var(--gray-400); }
+
+    /* ── RESPONSIVE ── */
+    @media (min-width: 900px) {
+      .hero-inner { grid-template-columns: 1fr 1fr; }
+      .steps-row { gap: 0; }
+    }
+
+    @media (max-width: 899px) {
+      #hero { padding: 90px 0 60px; }
+      .hero-stats { gap: 20px; }
+      .steps-row { flex-direction: column; gap: 16px; }
+      .step-connector { display: none; }
+      .phone-frame { width: 220px; height: 440px; }
+      .float-card.top-right { right: -8px; }
+      .float-card.bottom-left { left: -8px; }
+    }
+
+    @media (max-width: 767px) {
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+      .nav-right .btn { display: none; }
+      .hero-inner { grid-template-columns: 1fr; }
+      .hero-copy { max-width: 100%; }
+      .phone-wrap { display: none; }
+      .hero-stats { flex-wrap: wrap; gap: 16px; }
+      .problem-grid,
+      .features-grid,
+      .pricing-grid,
+      .team-grid { grid-template-columns: 1fr; }
+      .dl-store-btns { flex-direction: column; align-items: center; }
+      .store-btn { width: 100%; max-width: 280px; }
+      .foot-bottom { flex-direction: column; text-align: center; }
+      .modal-thumbs { grid-template-columns: repeat(2,1fr); }
+      .mission-box { padding: 28px 20px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modal" role="dialog" aria-modal="true" aria-labelledby="modal-heading">
+  <div class="modal-box">
+    <div class="modal-head">
+      <h3 id="modal-heading">StyleSync — App Preview</h3>
+      <button class="modal-close" id="modal-close-btn" aria-label="Close modal">
+        <i class="fas fa-xmark"></i>
+      </button>
+    </div>
+    <div class="video-box">
+      <i class="fas fa-play-circle"></i>
+      <h4>Demo Video Coming Soon</h4>
+      <p>StyleSync is currently in active development. Our full promotional video will be released alongside the official app launch in 2026. Join our waitlist to be notified first.</p>
+    </div>
+    <div class="modal-thumbs">
+      <div class="modal-thumb"><img src="https://placehold.co/160x90/0A1214/00F5D4?text=AR+Try-On" alt="AR Try-On screen preview"></div>
+      <div class="modal-thumb"><img src="https://placehold.co/160x90/0A1214/00F5D4?text=Live+Queue" alt="Live Queue screen preview"></div>
+      <div class="modal-thumb"><img src="https://placehold.co/160x90/0A1214/00F5D4?text=Booking" alt="Booking screen preview"></div>
+      <div class="modal-thumb"><img src="https://placehold.co/160x90/0A1214/00F5D4?text=Dashboard" alt="Barber Dashboard preview"></div>
+    </div>
+    <p class="modal-caption">App screen previews — in development</p>
+  </div>
+</div>
+
+<!-- NAVBAR -->
+<nav id="navbar" role="navigation" aria-label="Main navigation">
+  <a href="#hero" class="nav-logo" aria-label="StyleSync home">
+    <i class="fas fa-scissors" aria-hidden="true"></i>
+    <span>Style<span class="highlight">Sync</span></span>
+  </a>
+
+  <div class="nav-links" id="nav-links">
+    <a href="#problem">The Problem</a>
+    <a href="#features">Features</a>
+    <a href="#how-it-works">How It Works</a>
+    <a href="#pricing">Pricing</a>
+    <a href="#about">About</a>
+    <a href="#download">Download</a>
+  </div>
+
+  <div class="nav-right">
+    <button class="btn btn-accent" onclick="document.getElementById('download').scrollIntoView({behavior:'smooth'})" aria-label="Get early access">
+      <i class="fas fa-rocket" aria-hidden="true"></i> Get Early Access
+    </button>
+    <div class="hamburger" id="hamburger" role="button" tabindex="0" aria-label="Open navigation menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </div>
+  </div>
+
+  <div class="mobile-menu" id="mobile-menu" aria-hidden="true">
+    <a href="#problem"    onclick="closeMobileMenu()">The Problem</a>
+    <a href="#features"   onclick="closeMobileMenu()">Features</a>
+    <a href="#how-it-works" onclick="closeMobileMenu()">How It Works</a>
+    <a href="#pricing"    onclick="closeMobileMenu()">Pricing</a>
+    <a href="#about"      onclick="closeMobileMenu()">About</a>
+    <a href="#download"   onclick="closeMobileMenu()">Download</a>
+    <button class="btn btn-accent" onclick="closeMobileMenu(); document.getElementById('download').scrollIntoView({behavior:'smooth'})" style="justify-content:center;">
+      <i class="fas fa-rocket"></i> Get Early Access
+    </button>
+  </div>
+</nav>
+
+<main>
+  <!-- ═══════════════════════════════ HERO ═══════════════════════════════ -->
+  <section id="hero">
+    <div class="container">
+      <div class="hero-inner">
+
+        <!-- Text Column -->
+        <div class="reveal">
+          <div class="hero-venture">
+            <i class="fas fa-users" aria-hidden="true"></i>
+            A venture by <strong>ARTificial Grind</strong>
+          </div>
+          <div class="hero-badge">
+            <i class="fas fa-scissors" aria-hidden="true"></i>
+            Now in Development — Davao Region, Philippines
+          </div>
+
+          <h1 class="hero-title">
+            <span class="line">See Your New Look</span>
+            <span class="line line-accent">Before The Cut.</span>
+          </h1>
+
+          <p class="hero-copy">
+            StyleSync is the first AR-powered barbershop queue and booking app for Filipino men.
+            Skip the 90-minute wait. Preview your hairstyle on your real face. Book the barber you trust.
+            <em>All free to start.</em>
+          </p>
+
+          <div class="hero-coming-soon">
+            <i class="fas fa-code" aria-hidden="true"></i>
+            App currently in development — launching 2026
+          </div>
+
+          <div class="hero-actions">
+            <button class="btn btn-accent" onclick="document.getElementById('download').scrollIntoView({behavior:'smooth'})" aria-label="Get early access to StyleSync">
+              <i class="fas fa-rocket" aria-hidden="true"></i> Get Early Access
+            </button>
+            <button class="btn btn-outline" onclick="document.getElementById('modal').classList.add('open')" aria-label="Watch app demo preview">
+              <i class="fas fa-play" aria-hidden="true"></i> Watch Demo
+            </button>
+          </div>
+
+          <div class="hero-stats" aria-label="App statistics">
+            <div class="stat-item">
+              <span class="stat-num" id="stat-men" data-target="28" data-suffix="M+">0</span>
+              <span class="stat-lbl">Target Filipino men<br>in Davao Region</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-num" id="stat-styles" data-target="17" data-suffix="+">0</span>
+              <span class="stat-lbl">Men's AR hairstyle<br>previews available</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-num" id="stat-shops" data-target="80" data-suffix="K+">0</span>
+              <span class="stat-lbl">PH barbershops<br>we can serve</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Phone Column -->
+        <div class="phone-wrap reveal">
+          <div class="phone-frame">
+            <img
+              src="https://placehold.co/280x560/0A1214/00F5D4?text=StyleSync+AR+Screen"
+              alt="StyleSync AR hairstyle try-on screen preview"
+            >
+            <div class="float-card top-right" aria-hidden="true">
+              <i class="fas fa-scissors"></i>
+              <div class="fc-text">
+                <p>Face shape: Oval</p>
+                <span>Best styles matched ✓</span>
+              </div>
+            </div>
+            <div class="float-card bottom-left" aria-hidden="true">
+              <i class="fas fa-clock"></i>
+              <div class="fc-text">
+                <p>Your position: #3</p>
+                <span>Est. wait: 12 min</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    <a href="#problem" class="scroll-cue" aria-label="Scroll to problem section">
+      <i class="fas fa-chevron-down" aria-hidden="true"></i>
+    </a>
+  </section>
+
+  <!-- ═══════════════════════════ PROBLEM ═══════════════════════════ -->
+  <section id="problem" aria-labelledby="problem-heading">
+    <div class="container">
+      <div class="sec-header centered reveal">
+        <div class="sec-label"><i class="fas fa-exclamation-triangle" aria-hidden="true"></i> The Problem</div>
+        <h2 class="sec-title" id="problem-heading">Filipino Barbershops Are Stuck in the Past</h2>
+        <p class="sec-sub centered">
+          In the Davao Region, over 80,000 barbershops still operate with no digital system.
+          No queues. No booking. No way to show your barber what you want.
+          We surveyed 47 Filipino men and confirmed what everyone already feels.
+        </p>
+      </div>
+
+      <div class="problem-grid">
+        <div class="prob-card reveal" style="transition-delay:0s">
+          <div class="prob-icon"><i class="fas fa-clock" aria-hidden="true"></i></div>
+          <div class="prob-stat">45–90 min</div>
+          <div class="prob-label">Average wait with no visibility</div>
+          <p class="prob-body">91% of men surveyed are frustrated by barbershop wait times. There is no app to check the queue before leaving home.</p>
+        </div>
+        <div class="prob-card gold reveal" style="transition-delay:0.1s">
+          <div class="prob-icon" style="color:var(--gold)"><i class="fas fa-comment-slash" aria-hidden="true"></i></div>
+          <div class="prob-stat">65%</div>
+          <div class="prob-label">Experience "Style Anxiety"</div>
+          <p class="prob-body">Men fear requesting specific styles because they cannot visually show what they want. Barbers guess. Results disappoint.</p>
+        </div>
+        <div class="prob-card teal reveal" style="transition-delay:0.2s">
+          <div class="prob-icon" style="color:var(--teal)"><i class="fas fa-mobile-screen" aria-hidden="true"></i></div>
+          <div class="prob-stat">0 Apps</div>
+          <div class="prob-label">In the Philippine market</div>
+          <p class="prob-body">Zero existing apps combine AR hairstyle preview, live queue tracking, and digital booking for Filipino men. StyleSync is the first.</p>
+        </div>
+        <div class="prob-card red2 reveal" style="transition-delay:0.3s">
+          <div class="prob-icon"><i class="fas fa-peso-sign" aria-hidden="true"></i></div>
+          <div class="prob-stat">₱500+</div>
+          <div class="prob-label">Lost per barber on bad days</div>
+          <p class="prob-body">Walk-in chaos and no-shows cost barbers real income daily. No booking system means no predictability, no growth.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════ FEATURES ══════════════════════════ -->
+  <section id="features" aria-labelledby="features-heading">
+    <div class="container">
+      <div class="sec-header centered reveal">
+        <div class="sec-label"><i class="fas fa-star" aria-hidden="true"></i> Core Features</div>
+        <h2 class="sec-title" id="features-heading">One App. Every Problem Solved.</h2>
+        <p class="sec-sub centered">
+          StyleSync tackles all five pain points in the Davao barbershop experience —
+          from the moment you decide you need a haircut to the moment you sit down in the chair.
+        </p>
+      </div>
+
+      <div class="features-grid">
+
+        <article class="card feat-card c-red reveal" style="transition-delay:0s">
+          <div class="feat-icon-wrap"><i class="fas fa-camera" aria-hidden="true"></i></div>
+          <h3 class="feat-title">AR Haircut Try-On — Style Lab</h3>
+          <p class="feat-body">
+            Point your camera at your face. Google ML Kit detects your face shape and overlays
+            17+ men's hairstyles in real-time using ARCore and ARKit — like a TikTok filter built
+            for actual barbershop use. Send your chosen style directly to your barber before arriving.
+          </p>
+          <div class="feat-tags">
+            <span class="tag">Customer Feature</span>
+            <span class="tag teal">3 free previews</span>
+            <span class="tag gold">★ Unlimited with Premium</span>
+          </div>
+        </article>
+
+        <article class="card feat-card c-teal reveal" style="transition-delay:0.1s">
+          <div class="feat-icon-wrap"><i class="fas fa-list-ol" aria-hidden="true"></i></div>
+          <h3 class="feat-title">Live Queue Tracking — Queue HUD</h3>
+          <p class="feat-body">
+            Join any barbershop queue from home — no walking in, no calling. See your real-time
+            position and estimated wait. Get push notifications when 1 person is ahead of you.
+            Premium customers receive automatic priority placement.
+          </p>
+          <div class="feat-tags">
+            <span class="tag">Customer Feature</span>
+            <span class="tag gold">★ Priority placement with Premium</span>
+          </div>
+        </article>
+
+        <article class="card feat-card c-gold reveal" style="transition-delay:0.2s">
+          <div class="feat-icon-wrap"><i class="fas fa-calendar-check" aria-hidden="true"></i></div>
+          <h3 class="feat-title">Smart Barber Booking</h3>
+          <p class="feat-body">
+            Choose your specific barber, pick a date and time slot, attach your AR style preview.
+            The app matches you to the barber whose specialty best fits your chosen style.
+            Payment is made in-person after the cut — simple and trusted.
+          </p>
+          <div class="feat-tags">
+            <span class="tag">Customer Feature</span>
+            <span class="tag">In-person payment</span>
+          </div>
+        </article>
+
+        <article class="card feat-card c-teal reveal" style="transition-delay:0.3s">
+          <div class="feat-icon-wrap"><i class="fas fa-chart-line" aria-hidden="true"></i></div>
+          <h3 class="feat-title">Barber Dashboard & Queue Manager</h3>
+          <p class="feat-body">
+            Live queue management with drag-to-reorder controls. See each customer's chosen
+            AR hairstyle before they arrive. Track daily earnings. Manage your portfolio of
+            work to attract new clients across the Davao Region.
+          </p>
+          <div class="feat-tags">
+            <span class="tag">Barber Feature</span>
+            <span class="tag gold">₱99 Profile Boost available</span>
+          </div>
+        </article>
+
+        <article class="card feat-card c-red reveal" style="transition-delay:0.4s">
+          <div class="feat-icon-wrap"><i class="fas fa-heart" aria-hidden="true"></i></div>
+          <h3 class="feat-title">Suki Loyalty System</h3>
+          <p class="feat-body">
+            After your 3rd booking with the same barber, both of you earn Suki Status —
+            the traditional Filipino loyalty bond, digitized. Barbers identify their
+            Power Clients. Customers are recognized for their loyalty. The Suki relationship
+            is no longer just in memory.
+          </p>
+          <div class="feat-tags">
+            <span class="tag">Customer + Barber</span>
+            <span class="tag teal">Auto-triggered at booking #3</span>
+          </div>
+        </article>
+
+        <article class="card feat-card c-gold reveal" style="transition-delay:0.5s">
+          <div class="feat-icon-wrap"><i class="fas fa-shield-halved" aria-hidden="true"></i></div>
+          <h3 class="feat-title">SHA-256 Security + Barber Verification</h3>
+          <p class="feat-body">
+            All accounts are protected with SHA-256 password hashing, a unique cryptographic
+            salt per user, and a server-side pepper — never stored in the database.
+            Every barber is ID-verified by our admin team before receiving dashboard access.
+          </p>
+          <div class="feat-tags">
+            <span class="tag">All Users</span>
+            <span class="tag teal">ID-verified barbers only</span>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════ HOW IT WORKS ════════════════════════ -->
+  <section id="how-it-works" aria-labelledby="how-heading">
+    <div class="container">
+      <div class="sec-header centered reveal">
+        <div class="sec-label"><i class="fas fa-route" aria-hidden="true"></i> How It Works</div>
+        <h2 class="sec-title" id="how-heading">From Queue to Chair in 3 Steps</h2>
+        <p class="sec-sub centered">
+          StyleSync removes every friction point between deciding you need a haircut
+          and sitting down in the barber's chair.
+        </p>
+      </div>
+
+      <div class="steps-row">
+        <div class="step s-red reveal" style="transition-delay:0s">
+          <div class="step-num">01</div>
+          <div class="step-icon"><i class="fas fa-camera" aria-hidden="true"></i></div>
+          <h3 class="step-title">Preview Your Style</h3>
+          <p class="step-body">Open the AR Style Lab. The camera detects your face shape. Choose from 17+ men's hairstyles overlaid in real-time on your actual face. Save your preview to send to your barber.</p>
+        </div>
+        <div class="step-connector" aria-hidden="true"><i class="fas fa-arrow-right"></i></div>
+        <div class="step s-teal reveal" style="transition-delay:0.15s">
+          <div class="step-num">02</div>
+          <div class="step-icon"><i class="fas fa-list-ol" aria-hidden="true"></i></div>
+          <h3 class="step-title">Join &amp; Track Your Queue</h3>
+          <p class="step-body">Find barbershops near you in Davao Region. See live wait times. Join the queue remotely from home. Get notified when 1 person is ahead of you so you know when to leave.</p>
+        </div>
+        <div class="step-connector" aria-hidden="true"><i class="fas fa-arrow-right"></i></div>
+        <div class="step s-gold reveal" style="transition-delay:0.3s">
+          <div class="step-num">03</div>
+          <div class="step-icon"><i class="fas fa-scissors" aria-hidden="true"></i></div>
+          <h3 class="step-title">Show Up &amp; Get Cut</h3>
+          <p class="step-body">Walk in at the right time. Your barber already sees your AR style preview. Get the exact cut you previewed. Pay the barber in-person after the haircut — cash or their personal GCash.</p>
+        </div>
+      </div>
+
+      <div class="payment-note reveal">
+        <i class="fas fa-info-circle" aria-hidden="true"></i>
+        <p>
+          <strong>Payment is always in-person at the barbershop.</strong>
+          StyleSync handles the queue and booking — the actual payment between you and your barber stays between you and your barber. Cash or the barber's own GCash after the haircut.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════ PRICING ═══════════════════════════ -->
+  <section id="pricing" aria-labelledby="pricing-heading">
+    <div class="container">
+      <div class="sec-header centered reveal">
+        <div class="sec-label"><i class="fas fa-tag" aria-hidden="true"></i> Pricing</div>
+        <h2 class="sec-title" id="pricing-heading">Free to Start. Upgrade When You're Ready.</h2>
+        <p class="sec-sub centered">
+          The core StyleSync experience is completely free. Premium features unlock
+          when you're ready — at less than the price of one extra haircut per month.
+        </p>
+      </div>
+
+      <div class="pricing-grid">
+
+        <!-- Customer Free -->
+        <div class="price-card reveal" style="transition-delay:0s">
+          <div class="price-tier">For Customers</div>
+          <div class="price-name">Free</div>
+          <div class="price-amount">₱0</div>
+          <div class="price-period">/forever</div>
+          <div class="price-divider"></div>
+          <ul class="price-feats" aria-label="Free tier features">
+            <li><i class="fas fa-check" aria-hidden="true"></i> Join any barbershop queue</li>
+            <li><i class="fas fa-check" aria-hidden="true"></i> 3 AR hairstyle previews (lifetime)</li>
+            <li><i class="fas fa-check" aria-hidden="true"></i> 1 booking per day</li>
+            <li><i class="fas fa-check" aria-hidden="true"></i> Browse barber profiles</li>
+            <li><i class="fas fa-check" aria-hidden="true"></i> Real-time queue tracking</li>
+            <li class="disabled"><i class="fas fa-xmark" aria-hidden="true"></i> Unlimited AR previews</li>
+            <li class="disabled"><i class="fas fa-xmark" aria-hidden="true"></i> Priority queue placement</li>
+          </ul>
+          <button class="btn btn-outline price-cta" onclick="document.getElementById('download').scrollIntoView({behavior:'smooth'})" aria-label="Download StyleSync free">
+            Download Free
+          </button>
+        </div>
+
+        <!-- Customer Premium -->
+        <div class="price-card popular reveal" style="transition-delay:0.1s">
+          <div class="popular-badge">⭐ Most Popular</div>
+          <div class="price-tier">For Customers</div>
+          <div class="price-name">Premium</div>
+          <div class="price-amount">₱29</div>
+          <div class="price-period">/month</div>
+          <div class="price-save">or ₱299/year — save ₱49</div>
+          <div class="price-divider"></div>
+          <ul class="price-feats" aria-label="Premium tier features">
+            <li><i class="fas fa-check" aria-hidden="true"></i> Everything in Free</li>
+            <li><i class="fas fa-check" aria-hidden="true"></i> Unlimited AR style previews</li>
+            <li><i class="fas fa-check" aria-hidden="true"></i> Priority queue placement</li>
+            <li><i class="fas fa-check" aria-hidden="true"></i> Unlimited daily bookings</li>
+            <li><i class="fas fa-check" aria-hidden="true"></i> First alert on cancellations</li>
+            <li><i class="fas fa-check" aria-hidden="true"></i> Full booking history</li>
+          </ul>
+          <button class="btn btn-accent price-cta" onclick="alert('Download StyleSync to subscribe — launching 2026!')" aria-label="Get Premium plan">
+            Get Premium
+          </button>
+        </div>
+
+        <!-- Barber Pro -->
+        <div class="price-card c-teal reveal" style="transition-delay:0.2s">
+          <div class="price-tier">For Barbers</div>
+          <div class="price-name">Pro</div>
+          <div class="price-amount">₱79</div>
+          <div class="price-period">/month</div>
+          <div class="price-divider"></div>
+          <ul class="price-feats" aria-label="Barber Pro tier features">
+            <li><i class="fas fa-check" aria-hidden="true"></i> Free tier included</li>
+            <li><i class="fas fa-check" aria-hidden="true"></i> Unlimited daily bookings</li>
+            <li><i class="fas fa-check" aria-hidden="true"></i> 30 portfolio photos</li>
+            <li><i class="fas fa-check" aria-hidden="true"></i> Full earnings analytics</li>
+            <li><i class="fas fa-check" aria-hidden="true"></i> Suki client tracking</li>
+            <li><i class="fas fa-check" aria-hidden="true"></i> Profile Boost (₱99/7 days)</li>
+          </ul>
+          <button class="btn btn-teal price-cta" onclick="document.getElementById('download').scrollIntoView({behavior:'smooth'})" aria-label="Start Barber Pro free">
+            Start Free
+          </button>
+        </div>
+
+      </div>
+
+      <p class="pricing-note">
+        Shop Owner Plan: <strong style="color:var(--white)">₱149/month</strong> — multi-barber dashboard, peak hours analytics, Verified Partner badge. ·
+        Contact us at <a href="mailto:stylesync.davao@gmail.com">stylesync.davao@gmail.com</a>
+      </p>
+    </div>
+  </section>
+
+  <!-- ════════════════════════ ABOUT ═════════════════════════════ -->
+  <section id="about" aria-labelledby="about-heading">
+    <div class="container">
+      <div class="sec-header centered reveal">
+        <div class="sec-label"><i class="fas fa-users" aria-hidden="true"></i> About Us</div>
+        <h2 class="sec-title" id="about-heading">Built by Students from Davao,<br>For Filipino Men</h2>
+        <p class="sec-sub centered">
+          StyleSync is a venture by <strong style="color:var(--white)">Team ARTificial Grind</strong> —
+          three students from the Davao Region who experienced these barbershop problems firsthand.
+          We are programmers, analysts, and documentarians who decided to build the solution
+          that did not exist yet.
+        </p>
+      </div>
+
+      <!-- Venture badge -->
+      <div style="text-align:center; margin-bottom:40px;" class="reveal">
+        <div style="display:inline-flex;align-items:center;gap:10px;background:rgba(0, 245, 212, 0.1);border:1px solid rgba(0, 245, 212, 0.25);border-radius:12px;padding:14px 24px;">
+          <i class="fas fa-code-branch" style="color:#00F5D4;font-size:1.2rem;" aria-hidden="true"></i>
+          <div style="text-align:left;">
+            <div style="font-size:0.72rem;color:var(--gray-400);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:2px;">Developed by</div>
+            <div style="font-family:var(--font-heading);font-size:1.1rem;color:var(--white);font-weight:700;">ARTificial Grind</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="team-grid">
+        <article class="card team-card reveal" style="transition-delay:0s">
+          <img class="team-avatar" src="https://placehold.co/80x80/0A1214/00F5D4?text=RD" alt="Ronian Dave Tolentino">
+          <h3 class="team-name">Ronian Dave Tolentino</h3>
+          <div class="team-role" style="color:var(--accent-primary)">Programmer</div>
+          <p class="team-bio">Built the entire Flutter app — AR camera, live queue, Firebase backend, and SHA-256 security. Every screen of StyleSync was coded by him.</p>
+        </article>
+        <article class="card team-card reveal" style="transition-delay:0.1s">
+          <img class="team-avatar" src="https://placehold.co/80x80/0A1214/00F5D4?text=AS" alt="Antonio Sargado Jr.">
+          <h3 class="team-name">Antonio Sargado Jr.</h3>
+          <div class="team-role" style="color:#00F5D4">System Analyst</div>
+          <p class="team-bio">Designed the Firestore database schema, Firebase Security Rules, and complete system architecture that connects every module of the app.</p>
+        </article>
+        <article class="card team-card reveal" style="transition-delay:0.2s">
+          <img class="team-avatar" src="https://placehold.co/80x80/0A1214/00F5D4?text=FJ" alt="Frank Jay Rato">
+          <h3 class="team-name">Frank Jay Rato</h3>
+          <div class="team-role" style="color:#FFD700">Documentarian</div>
+          <p class="team-bio">Produces all technical documentation, the business proposal, user manuals, and every presentation material for the project including this website.</p>
+        </article>
+      </div>
+
+      <div class="mission-box reveal">
+        <p class="mission-quote">
+          "StyleSync addresses a problem that is real, daily, and experienced by millions
+          of Filipino men who visit barbershops every week. We built the solution that
+          nobody else built — because we needed it too."
+        </p>
+        <div class="mission-credit">— Team ARTificial Grind, Davao Region 2026</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════ DOWNLOAD ══════════════════════════ -->
+  <section id="download" aria-labelledby="download-heading">
+    <div class="container">
+      <div class="dl-inner reveal">
+        <div class="dl-icon" aria-hidden="true"><i class="fas fa-scissors"></i></div>
+
+        <h2 class="dl-title" id="download-heading">Ready to Skip the Wait?</h2>
+        <p class="dl-sub">
+          StyleSync is currently in active development by Team ARTificial Grind.
+          Register your interest now to receive launch updates, early access, and
+          barbershop partnership opportunities in the Davao Region.
+        </p>
+
+        <div class="dl-status">
+          <i class="fas fa-circle" aria-hidden="true"></i>
+          App in development — Launching 2026 · Davao Region, Philippines
+        </div>
+
+        <div class="dl-store-btns">
+          <button class="store-btn" onclick="alert('StyleSync for Android — Launching 2026! Register your interest at stylesync.davao@gmail.com')" aria-label="Get on Google Play when available">
+            <i class="fab fa-google-play" aria-hidden="true"></i>
+            <div class="store-btn-text">
+              <span class="small">Coming soon on</span>
+              <span class="large">Google Play</span>
+            </div>
+          </button>
+          <button class="store-btn" onclick="alert('StyleSync for iOS — Launching 2026! Register your interest at stylesync.davao@gmail.com')" aria-label="Get on App Store when available">
+            <i class="fab fa-apple" aria-hidden="true"></i>
+            <div class="store-btn-text">
+              <span class="small">Coming soon on</span>
+              <span class="large">App Store</span>
+            </div>
+          </button>
+        </div>
+
+        <p class="dl-contact">
+          For barbershop partnerships and early access enquiries:
+          <a href="mailto:stylesync.davao@gmail.com">stylesync.davao@gmail.com</a>
+        </p>
+
+        <div class="social-row">
+          <a href="#" aria-label="StyleSync on Facebook"><i class="fab fa-facebook" aria-hidden="true"></i></a>
+          <a href="#" aria-label="StyleSync on Instagram"><i class="fab fa-instagram" aria-hidden="true"></i></a>
+          <a href="#" aria-label="StyleSync on TikTok"><i class="fab fa-tiktok" aria-hidden="true"></i></a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="foot-grid">
+      <div>
+        <div class="foot-logo">
+          <i class="fas fa-scissors" aria-hidden="true"></i>
+          Style<span class="highlight">Sync</span>
+        </div>
+        <div class="foot-venture">A venture by ARTificial Grind</div>
+        <p class="foot-desc">
+          AR-Powered Barbershop Queue &amp; Booking App ·
+          For Filipino Men Only · Davao Region, Philippines ·
+          Currently in Development
+        </p>
+        <p class="foot-copy">© 2026 ARTificial Grind. All rights reserved.</p>
+      </div>
+
+      <div>
+        <h4 class="foot-heading">Quick Links</h4>
+        <nav class="foot-links" aria-label="Footer navigation">
+          <a href="#problem">The Problem</a>
+          <a href="#features">Features</a>
+          <a href="#how-it-works">How It Works</a>
+          <a href="#pricing">Pricing</a>
+          <a href="#about">About</a>
+          <a href="#download">Early Access</a>
+        </nav>
+      </div>
+
+      <div>
+        <h4 class="foot-heading">Contact</h4>
+        <div class="foot-links">
+          <a href="mailto:stylesync.davao@gmail.com">stylesync.davao@gmail.com</a>
+          <span>Davao Region, Philippines</span>
+          <span>Academic Year 2025–2026</span>
+        </div>
+        <div style="margin-top:16px;display:flex;gap:12px;">
+          <a href="#" aria-label="Facebook" style="color:var(--gray-400);font-size:1rem;transition:color 0.2s" onmouseover="this.style.color='var(--accent-primary)'" onmouseout="this.style.color='var(--gray-400)'"><i class="fab fa-facebook"></i></a>
+          <a href="#" aria-label="Instagram" style="color:var(--gray-400);font-size:1rem;transition:color 0.2s" onmouseover="this.style.color='var(--accent-primary)'" onmouseout="this.style.color='var(--gray-400)'"><i class="fab fa-instagram"></i></a>
+          <a href="#" aria-label="TikTok" style="color:var(--gray-400);font-size:1rem;transition:color 0.2s" onmouseover="this.style.color='var(--accent-primary)'" onmouseout="this.style.color='var(--gray-400)'"><i class="fab fa-tiktok"></i></a>
+        </div>
+      </div>
+    </div>
+
+    <div class="foot-divider"></div>
+    <div class="foot-bottom">
+      <span>MEN ONLY · All hairstyle content and imagery is for male users only.</span>
+      <span>Built with Flutter · Firebase · Google ML Kit · ARCore/ARKit</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  /* ── Navbar scroll state ── */
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    navbar.classList.toggle('scrolled', window.scrollY > 50);
+  }, { passive: true });
+
+  /* ── Mobile menu ── */
+  const hamburger = document.getElementById('hamburger');
+  const mobileMenu = document.getElementById('mobile-menu');
+
+  function toggleMobileMenu() {
+    const isOpen = mobileMenu.classList.contains('open');
+    mobileMenu.classList.toggle('open', !isOpen);
+    hamburger.classList.toggle('open', !isOpen);
+    hamburger.setAttribute('aria-expanded', !isOpen);
+    mobileMenu.setAttribute('aria-hidden', isOpen);
+  }
+
+  function closeMobileMenu() {
+    mobileMenu.classList.remove('open');
+    hamburger.classList.remove('open');
+    hamburger.setAttribute('aria-expanded', 'false');
+    mobileMenu.setAttribute('aria-hidden', 'true');
+  }
+
+  hamburger.addEventListener('click', toggleMobileMenu);
+  hamburger.addEventListener('keydown', e => {
+    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggleMobileMenu(); }
+  });
+
+  /* Close mobile menu on outside click */
+  document.addEventListener('click', e => {
+    if (!navbar.contains(e.target)) closeMobileMenu();
+  });
+
+  /* ── Modal ── */
+  const modal = document.getElementById('modal');
+  const modalCloseBtn = document.getElementById('modal-close-btn');
+
+  function openModal() { modal.classList.add('open'); document.body.style.overflow = 'hidden'; }
+  function closeModal() { modal.classList.remove('open'); document.body.style.overflow = ''; }
+
+  modalCloseBtn.addEventListener('click', closeModal);
+  modal.addEventListener('click', e => { if (e.target === modal) closeModal(); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape' && modal.classList.contains('open')) closeModal(); });
+
+  /* ── Scroll reveal ── */
+  const revealObserver = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        revealObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12 });
+
+  document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+  /* ── Active nav links ── */
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.nav-links a');
+
+  const navObserver = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const id = entry.target.id;
+        navLinks.forEach(link => {
+          link.classList.toggle('active', link.getAttribute('href') === '#' + id);
+        });
+      }
+    });
+  }, { rootMargin: '-35% 0px -55% 0px' });
+
+  sections.forEach(s => navObserver.observe(s));
+
+  /* ── Counter animation ── */
+  const counters = document.querySelectorAll('.stat-num[data-target]');
+  let countersStarted = false;
+
+  const counterObserver = new IntersectionObserver(entries => {
+    if (entries[0].isIntersecting && !countersStarted) {
+      countersStarted = true;
+      counters.forEach(counter => {
+        const target = parseFloat(counter.dataset.target);
+        const suffix = counter.dataset.suffix || '';
+        const duration = 1600;
+        const start = performance.now();
+
+        function tick(now) {
+          const progress = Math.min((now - start) / duration, 1);
+          const eased = 1 - Math.pow(1 - progress, 3);
+          const value = eased * target;
+          counter.textContent = (target % 1 !== 0 ? value.toFixed(1) : Math.floor(value)) + suffix;
+          if (progress < 1) requestAnimationFrame(tick);
+          else counter.textContent = (target % 1 !== 0 ? target.toFixed(1) : target) + suffix;
+        }
+        requestAnimationFrame(tick);
+      });
+    }
+  }, { threshold: 0.5 });
+
+  const heroSection = document.getElementById('hero');
+  if (heroSection) counterObserver.observe(heroSection);
+
+  /* ── Smooth scroll polyfill for older Safari ── */
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', e => {
+      const target = document.querySelector(anchor.getAttribute('href'));
+      if (target) { e.preventDefault(); target.scrollIntoView({ behavior: 'smooth' }); }
+    });
+  });
+</script>
+</body>
+</html>
